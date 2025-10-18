@@ -12,4 +12,20 @@ class Board
   def initialize(grid = Array.new(6) { Array.new(7) })
     @grid = grid
   end
+
+  def draw
+    puts '| 1 2 3 4 5 6 7 |'
+    @grid.each { |row| print_row(row) }
+  end
+
+  private
+
+  def print_row(row)
+    print '| '
+    row.each do |color|
+      symbol = color.nil? ? EMPTY_SYMBOL : TOKEN_SYMBOL.colorize(color)
+      print "#{symbol} "
+    end
+    puts '|'
+  end
 end
