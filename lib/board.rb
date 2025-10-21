@@ -18,6 +18,18 @@ class Board
     @grid.each { |row| print_row(row) }
   end
 
+  def drop_token(token, column_index)
+    row_index = 5
+
+    until @grid.dig(row_index, column_index).nil?
+      row_index -= 1
+      return nil if row_index.negative?
+    end
+
+    @grid[row_index][column_index] = token
+    [row_index, column_index]
+  end
+
   private
 
   def print_row(row)
