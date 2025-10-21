@@ -54,4 +54,82 @@ describe Board do
       end
     end
   end
+
+  describe '#win?' do
+    context 'when there is a horizontal win' do
+      subject(:board_win_horizontal) { described_class.new(win_state_horizontal) }
+
+      let(:win_state_horizontal) do
+        [
+          [nil, nil,  nil,  nil,  nil,  nil, nil],
+          [nil, nil,  nil,  nil,  nil,  nil, nil],
+          [nil, nil,  nil,  nil,  nil,  nil, nil],
+          [nil, nil,  nil,  nil,  nil,  nil, nil],
+          [nil, nil,  nil,  nil,  nil,  nil, nil],
+          [nil, :red, :red, :red, :red, nil, nil]
+        ]
+      end
+
+      it 'returns true' do
+        expect(board_win_horizontal.win?([5, 2])).to be(true)
+      end
+    end
+
+    context 'when there is a vertical win' do
+      subject(:board_win_vertical) { described_class.new(win_state_vertical) }
+
+      let(:win_state_vertical) do
+        [
+          [nil, nil, nil, nil, nil,  nil, nil],
+          [nil, nil, nil, nil, :red, nil, nil],
+          [nil, nil, nil, nil, :red, nil, nil],
+          [nil, nil, nil, nil, :red, nil, nil],
+          [nil, nil, nil, nil, :red, nil, nil],
+          [nil, nil, nil, nil, :red, nil, nil]
+        ]
+      end
+
+      it 'returns true' do
+        expect(board_win_vertical.win?([3, 4])).to be(true)
+      end
+    end
+
+    context 'when there is a forward diagonal win' do
+      subject(:board_win_forward_diagonal) { described_class.new(win_state_forward_diagonal) }
+
+      let(:win_state_forward_diagonal) do
+        [
+          [nil, nil,  nil,  nil,  nil,  nil, nil],
+          [nil, nil,  nil,  nil,  nil,  nil, nil],
+          [nil, :red, nil,  nil,  nil,  nil, nil],
+          [nil, nil,  :red, nil,  nil,  nil, nil],
+          [nil, nil,  nil,  :red, nil,  nil, nil],
+          [nil, nil,  nil,  nil,  :red, nil, nil]
+        ]
+      end
+
+      it 'returns true' do
+        expect(board_win_forward_diagonal.win?([4, 3])).to be(true)
+      end
+    end
+
+    context 'when there is a backward diagonal win' do
+      subject(:board_win_backward_diagonal) { described_class.new(win_state_backward_diagonal) }
+
+      let(:win_state_backward_diagonal) do
+        [
+          [nil, nil,   nil,   nil,   nil,   nil, nil],
+          [nil, nil,   nil,   nil,   :red,  nil, nil],
+          [nil, nil,   nil,   :red,  nil,   nil, nil],
+          [nil, nil,   :red,  nil,   nil,   nil, nil],
+          [nil, :red,  nil,   nil,   nil,   nil, nil],
+          [nil, nil,   nil,   nil,   nil,   nil, nil]
+        ]
+      end
+
+      it 'returns true' do
+        expect(board_win_backward_diagonal.win?([3, 2])).to be(true)
+      end
+    end
+  end
 end
