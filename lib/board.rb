@@ -2,7 +2,7 @@
 
 require 'colorize'
 
-# This class manages a game of Connect Four.
+# This class manages a game board to be used in Connect Four.
 class Board
   EMPTY_SYMBOL = "\u25CC"
   TOKEN_SYMBOL = "\u25C9"
