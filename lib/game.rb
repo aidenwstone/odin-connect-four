@@ -9,13 +9,13 @@ class Game
   def initialize
     @player1 = :red
     @player2 = :yellow
-    @curr_player = @player1.capitalize
+    @curr_player = @player1
     @board = Board.new
     @prev_move = []
   end
 
   def player_input
-    puts "#{@curr_player}, select a column to drop your token in:"
+    puts "#{@curr_player.capitalize}, select a column to drop your token in:"
 
     loop do
       user_input = gets.chomp
