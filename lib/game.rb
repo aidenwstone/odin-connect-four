@@ -14,6 +14,18 @@ class Game
     @prev_move = []
   end
 
+  def player_input
+    puts "#{@curr_player}, select a column to drop your token in:"
+
+    loop do
+      user_input = gets.chomp
+      verified_input = process_input(user_input)
+      return verified_input if verified_input
+
+      puts 'Input error! Please enter a number from 1 to 7:'
+    end
+  end
+
   def process_input(user_input)
     user_input.to_i - 1 if user_input.match(/^[1-7]$/)
   end
