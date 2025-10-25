@@ -132,4 +132,33 @@ describe Board do
       end
     end
   end
+
+  describe '#full?' do
+    context 'when the board is full' do
+      subject(:board_full) { described_class.new(full_state) }
+
+      let(:full_state) do
+        [
+          %i[red red red red red red red],
+          %i[red red red red red red red],
+          %i[red red red red red red red],
+          %i[red red red red red red red],
+          %i[red red red red red red red],
+          %i[red red red red red red red]
+        ]
+      end
+
+      it 'returns true' do
+        expect(board_full).to be_full
+      end
+    end
+
+    context 'when the board is not full' do
+      subject(:board_empty) { described_class.new }
+
+      it 'returns false' do
+        expect(board_empty).not_to be_full
+      end
+    end
+  end
 end
