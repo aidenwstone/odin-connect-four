@@ -29,4 +29,12 @@ class Game
   def process_input(user_input)
     user_input.to_i - 1 if user_input.match(/^[1-7]$/)
   end
+
+  def win_state
+    if @board.win?(@prev_move)
+      :win
+    elsif @board.full?
+      :tie
+    end
+  end
 end
