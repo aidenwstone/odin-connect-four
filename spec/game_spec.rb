@@ -78,4 +78,74 @@ describe Game do
       end
     end
   end
+
+  describe '#win_state' do
+    let(:last_move_coordinates) { [3, 4] }
+
+    let(:board_win) { instance_double(Board, win?: true) }
+    let(:board_no_win) { instance_double(Board, win?: false, full?: false) }
+    let(:board_tie) { instance_double(Board, win?: false, full?: true) }
+
+    context 'when the last move results in a win' do
+      subject(:game_win) { described_class.new }
+
+      before do
+        game_win.instance_variable_set(:@prev_move, last_move_coordinates)
+        game_win.instance_variable_set(:@board, board_win)
+      end
+
+      it 'calls Board#win? with previous coordinates' do
+        game_win.win_state
+        expect(board_win).to have_received(:win?).with(last_move_coordinates)
+      end
+
+      it 'returns :win' do
+        state = game_win.win_state
+        expect(state).to be(:win)
+      end
+    end
+
+    context 'when the last move does not result in a win' do
+      subject(:game_no_win) { described_class.new }
+
+      before do
+        game_no_win.instance_variable_set(:@prev_move, last_move_coordinates)
+        game_no_win.instance_variable_set(:@board, board_no_win)
+      end
+
+      it 'calls Board#win? with previous coordinates' do
+        game_no_win.win_state
+        expect(board_no_win).to have_received(:win?).with(last_move_coordinates)
+      end
+
+      it 'returns nil' do
+        state = game_no_win.win_state
+        expect(state).to be_nil
+      end
+    end
+
+    context 'when the last move results in a tie' do
+      subject(:game_tie) { described_class.new }
+
+      before do
+        game_tie.instance_variable_set(:@prev_move, last_move_coordinates)
+        game_tie.instance_variable_set(:@board, board_tie)
+      end
+
+      it 'calls Board#win? with previous coordinates' do
+        game_tie.win_state
+        expect(board_tie).to have_received(:win?).with(last_move_coordinates)
+      end
+
+      it 'calls Board#full?' do
+        game_tie.win_state
+        expect(board_tie).to have_received(:full?)
+      end
+
+      it 'returns :tie' do
+        state = game_tie.win_state
+        expect(state).to be(:tie)
+      end
+    end
+  end
 end
