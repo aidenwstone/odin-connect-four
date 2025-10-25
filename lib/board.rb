@@ -40,6 +40,10 @@ class Board
             win_diagonal?(row_index, column_index, player_token)
   end
 
+  def full?
+    @grid.none? { |row| row.include?(nil) }
+  end
+
   private
 
   def print_row(row)
