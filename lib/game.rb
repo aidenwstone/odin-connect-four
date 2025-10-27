@@ -37,4 +37,10 @@ class Game
       :tie
     end
   end
+
+  private
+
+  def switch_player
+    @curr_player = @curr_player == @player1 ? @player2 : @player1
+  end
 end
