@@ -29,7 +29,7 @@ describe Game do
         allow(game_input).to receive(:gets).and_return(input_word, input_valid)
       end
 
-      it 'complete loop and displays error message once' do
+      it 'completes loop and displays error message once' do
         game_input.player_input
         expect(game_input).to have_received(:puts).with(error_message).once
       end
@@ -41,7 +41,7 @@ describe Game do
         allow(game_input).to receive(:gets).and_return(input_word, input_char, input_valid)
       end
 
-      it 'complete loop and displays error message twice' do
+      it 'completes loop and displays error message twice' do
         game_input.player_input
         expect(game_input).to have_received(:puts).with(error_message).twice
       end
