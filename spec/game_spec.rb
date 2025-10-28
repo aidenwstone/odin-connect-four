@@ -79,6 +79,52 @@ describe Game do
     end
   end
 
+  describe '#make_move' do
+    subject(:game_move) { described_class.new }
+
+    let(:error_message) { 'That column is full!' }
+    let(:board_move) { instance_double(Board) }
+
+    before do
+      game_move.instance_variable_set(:@board, board_move)
+      allow(game_move).to receive(:puts)
+    end
+
+    context 'when an available column is chosen' do
+      before do
+        allow(game_move).to receive(:player_input)
+        allow(board_move).to receive(:drop_token).and_return([2, 3])
+      end
+
+      it 'calls #player_input once' do
+        game_move.make_move
+        expect(game_move).to have_received(:player_input).once
+      end
+
+      it 'stops loop and does not display error message' do
+        game_move.make_move
+        expect(game_move).not_to have_received(:puts).with(error_message)
+      end
+    end
+
+    context 'when an unavailable column is chosen once, followed by an available column' do
+      before do
+        allow(game_move).to receive(:player_input)
+        allow(board_move).to receive(:drop_token).and_return(nil, [2, 3])
+      end
+
+      it 'calls #player_input twice' do
+        game_move.make_move
+        expect(game_move).to have_received(:player_input).twice
+      end
+
+      it 'completes loop and display error message once' do
+        game_move.make_move
+        expect(game_move).to have_received(:puts).with(error_message).once
+      end
+    end
+  end
+
   describe '#win_state' do
     let(:last_move_coordinates) { [3, 4] }
 
