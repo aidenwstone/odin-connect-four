@@ -14,6 +14,21 @@ class Game
     @prev_move = []
   end
 
+  def play_game
+    loop do
+      @board.draw
+      make_move
+
+      state = win_state
+      unless state.nil?
+        announce_winner(state)
+        break
+      end
+
+      switch_player
+    end
+  end
+
   def player_input
     puts "#{@curr_player.capitalize}, select a column to drop your token in:"
 
