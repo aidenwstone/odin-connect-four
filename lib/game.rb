@@ -30,6 +30,17 @@ class Game
     user_input.to_i - 1 if user_input.match(/^[1-7]$/)
   end
 
+  def make_move
+    loop do
+      drop_column = player_input
+      @prev_move = @board.drop_token(@curr_player, drop_column)
+
+      break unless @prev_move.nil?
+
+      puts 'That column is full!'
+    end
+  end
+
   def win_state
     if @board.win?(@prev_move)
       :win
