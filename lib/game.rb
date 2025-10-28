@@ -43,4 +43,13 @@ class Game
   def switch_player
     @curr_player = @curr_player == @player1 ? @player2 : @player1
   end
+
+  def announce_winner(state)
+    @board.draw
+    if state == :win
+      puts "The winner is #{@curr_player.capitalize}!"
+    else
+      puts "It's a tie!"
+    end
+  end
 end
